@@ -89,7 +89,7 @@
 
 ;; Core
 (defun make-ants (initial-position)
-  "Make *m*-th ants with initial-position."
+  "Make *m* ants with initial-position."
   (loop :repeat *m*
         :collect (make-instance 'ant
                    :position initial-position :route (list initial-position))))
