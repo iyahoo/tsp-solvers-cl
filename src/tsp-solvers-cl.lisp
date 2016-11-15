@@ -101,13 +101,9 @@
 (defun ant-go-node (ant &optional (unvisited-node (remove (ant-position ant) (iota *n*))))
   "Recursive function"
   (if (> (length unvisited-node) 0)
-      (let ((a-choose-node (choose-node ant unvisited-node)))
-        ;; (setf (ant-position ant) a-choose-node
-        ;;       (ant-route ant) (cons a-choose-node (ant-route ant)))
-        (update-ant ant a-choose-node (cons a-choose-node (ant-route ant)))
-        (ant-go-node ant (remove a-choose-node unvisited-node)))
-      ;; (setf (ant-position ant) *init-pos*
-      ;;       (ant-route ant) (cons *init-pos* (ant-route ant)))
+      (let ((chosen-node (choose-node ant unvisited-node)))
+        (update-ant ant chosen-node (cons chosen-node (ant-route ant)))
+        (ant-go-node ant (remove chosen-node unvisited-node)))
       (update-ant ant *init-pos* (cons *init-pos* (ant-route ant)))))
 
 (defun pheromone-evaporation ()
