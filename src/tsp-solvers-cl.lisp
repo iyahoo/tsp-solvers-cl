@@ -94,15 +94,21 @@
         :collect (make-instance 'ant
                    :position initial-position :route (list initial-position))))
 
+(defmacro update-ant (ant pos route)
+  `(setf (ant-position ,ant) ,pos
+         (ant-route ,ant) ,route))
+
 (defun ant-go-node (ant &optional (unvisited-node (remove (ant-position ant) (iota *n*))))
   "Recursive function"
   (if (> (length unvisited-node) 0)
       (let ((a-choose-node (choose-node ant unvisited-node)))
-        (setf (ant-position ant) a-choose-node
-              (ant-route ant) (cons a-choose-node (ant-route ant)))
+        ;; (setf (ant-position ant) a-choose-node
+        ;;       (ant-route ant) (cons a-choose-node (ant-route ant)))
+        (update-ant ant a-choose-node (cons a-choose-node (ant-route ant)))
         (ant-go-node ant (remove a-choose-node unvisited-node)))
-      (setf (ant-position ant) *init-pos*
-            (ant-route ant) (cons *init-pos* (ant-route ant)))))
+      ;; (setf (ant-position ant) *init-pos*
+      ;;       (ant-route ant) (cons *init-pos* (ant-route ant)))
+      (update-ant ant *init-pos* (cons *init-pos* (ant-route ant)))))
 
 (defun pheromone-evaporation ()
   "Update tau-matrix (evaporation by rho)"
