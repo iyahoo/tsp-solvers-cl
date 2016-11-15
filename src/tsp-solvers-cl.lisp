@@ -59,6 +59,7 @@
 
 ;; Choose next node
 (defun tau-and-heuristic (i j)
+  "Depends on Grapd *G*, *alpha*, *beta*, *tau-matrix*."
   (* (expt (aref *tau-matrix* i j) *alpha*)
      (expt (aref *G* i j) *beta*)))
 
@@ -72,20 +73,19 @@
   "A node's probability of be chosen by ant."
   (/ (tau-and-heuristic current-node next-node) sum-of-all-th))
 
-(defmethod choose-node ((ant ant) unvisited-node &optional (rest-probability 1.0))
+(defmethod choose-node ((ant ant) unvisited-node sum-of-all-th &optional (rest-probability 1.0))
   "Recursive function.
    if random value less than probability of be chosen, return the candidate node.
    Otherwise, this function will be recursion with rest unvisited nodes."
   (assert (> rest-probability 0))
   (assert (not (null unvisited-node)))
-  (let ((sum-of-all-th (calc-sum-of-all-th (ant-position ant) unvisited-node))
-        (candidate-node (first unvisited-node))
+  (let ((candidate-node (first unvisited-node))
         (rand-val (random rest-probability *my-random-state*)))
     (if (< (- rand-val
               (probability-of-be-chosen (ant-position ant) candidate-node sum-of-all-th))
            0)
         candidate-node
-        (choose-node ant (rest unvisited-node) (- rest-probability rand-val)))))
+        (choose-node ant (rest unvisited-node) sum-of-all-th (- rest-probability rand-val)))))
 
 ;; Core
 (defun make-ants (initial-position)
@@ -99,9 +99,11 @@
          (ant-route ,ant) ,route))
 
 (defmethod ant-go-node ((ant ant) &optional (unvisited-node (remove (ant-position ant) (iota *n*))))
-  "Recursive function"
+  "Recursive function. 
+   "
   (if (> (length unvisited-node) 0)
-      (let ((chosen-node (choose-node ant unvisited-node)))
+      (let* ((sum-of-all-th (calc-sum-of-all-th (ant-position ant) unvisited-node))
+             (chosen-node (choose-node ant unvisited-node sum-of-all-th)))
         (update-ant ant chosen-node (cons chosen-node (ant-route ant)))
         (ant-go-node ant (remove chosen-node unvisited-node)))
       (update-ant ant *init-pos* (cons *init-pos* (ant-route ant)))))
@@ -109,8 +111,8 @@
 (defun pheromone-evaporation ()
   "Update tau-matrix (evaporation by rho)"
   (let ((indexes (iota *n*)))
-    (dolist (i indexes)
-      (dolist (j indexes)
+    (doeach (i indexes)
+      (doeach (j indexes)
         (setf (aref *tau-matrix* i j) (* (aref *tau-matrix* i j) *rho*))))))
 
 (defun update-pheromon-matrix (ants)
