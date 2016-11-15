@@ -72,7 +72,7 @@
   "A node's probability of be chosen by ant."
   (/ (tau-and-heuristic current-node next-node) sum-of-all-th))
 
-(defun choose-node (ant unvisited-node &optional (rest-probability 1.0))
+(defmethod choose-node ((ant ant) unvisited-node &optional (rest-probability 1.0))
   "Recursive function.
    if random value less than probability of be chosen, return the candidate node.
    Otherwise, this function will be recursion with rest unvisited nodes."
@@ -98,7 +98,7 @@
   `(setf (ant-position ,ant) ,pos
          (ant-route ,ant) ,route))
 
-(defun ant-go-node (ant &optional (unvisited-node (remove (ant-position ant) (iota *n*))))
+(defmethod ant-go-node ((ant ant) &optional (unvisited-node (remove (ant-position ant) (iota *n*))))
   "Recursive function"
   (if (> (length unvisited-node) 0)
       (let ((chosen-node (choose-node ant unvisited-node)))
