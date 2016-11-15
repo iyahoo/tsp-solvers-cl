@@ -109,8 +109,8 @@
 (defun pheromone-evaporation ()
   "Update tau-matrix (evaporation by rho)"
   (let ((indexes (iota *n*)))
-    (loop :for i :in indexes :do
-      (loop :for j :in indexes :do
+    (dolist (i indexes)
+      (dolist (j indexes)
         (setf (aref *tau-matrix* i j) (* (aref *tau-matrix* i j) *rho*))))))
 
 (defun update-pheromon-matrix (ants)
