@@ -57,11 +57,21 @@
         *init-pos* init-pos)
   (initialize-tau *tau*))
 
+;; Accessor
+;; For reduce cost of function call and it will be handled by `setf`, each process is defined by macro.
+(defmacro cost-of (i j)
+  "Return cost between ith-node and jth-node."
+  `(aref *G* ,i ,j))
+
+(defmacro pheromone-of (i j)
+  "Return cost between ith-node and jth-node."
+  `(aref *tau-matrix* ,i ,j))
+
 ;; Choose next node
 (defun tau-and-heuristic (i j)
   "Depends on Grapd *G*, *alpha*, *beta*, *tau-matrix*."
-  (* (expt (aref *tau-matrix* i j) *alpha*)
-     (expt (aref *G* i j) *beta*)))
+  (* (expt (pheromone-of i j) *alpha*)
+     (expt (cost-of i j) *beta*)))
 
 (defun calc-sum-of-all-th (i unvisited-node)
   "Sum of all tau multiply heuristic on unvisited node"
