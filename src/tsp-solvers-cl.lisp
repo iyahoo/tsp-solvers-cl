@@ -5,7 +5,7 @@
 
 ;; Graph
 (defvar *graph-path* (merge-pathnames #P"data/graph"))
-(defvar *G*)          ; Graph
+(defvar *G*)
 
 ;; Parameter
 (defvar *alpha* 1)              ; Pheromone influence (is fixed to 1).
@@ -84,7 +84,7 @@
   (/ (tau-and-heuristic current-node next-node) sum-of-all-th))
 
 (defmethod choose-node ((ant ant) unvisited-node sum-of-all-th &optional (rest-probability 1.0))
-  "Recursive function.
+  "Recursive function. Depends on random value.
    if random value less than probability of be chosen, return the candidate node.
    Otherwise, this function will be recursion with rest unvisited nodes."
   (assert (> rest-probability 0))
@@ -97,9 +97,10 @@
         candidate-node
         (choose-node ant (rest unvisited-node) sum-of-all-th (- rest-probability rand-val)))))
 
-;; Core
+;; For ant functions
 (defun make-ants (initial-position)
-  "Make *m* ants with initial-position."
+  "Depends on *m*.
+   Make *m* ants with initial-position."
   (loop :repeat *m*
         :collect (make-instance 'ant
                    :position initial-position :route (list initial-position))))
@@ -109,8 +110,7 @@
          (ant-route ,ant) ,route))
 
 (defmethod ant-go-node ((ant ant) &optional (unvisited-node (remove (ant-position ant) (iota *n*))))
-  "Recursive function. 
-   "
+  "Recursive function. Depends on *init-pos*"
   (if (> (length unvisited-node) 0)
       (let* ((sum-of-all-th (calc-sum-of-all-th (ant-position ant) unvisited-node))
              (chosen-node (choose-node ant unvisited-node sum-of-all-th)))
