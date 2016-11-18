@@ -58,7 +58,8 @@
   (initialize-tau *tau*))
 
 ;; Accessor
-;; For reduce cost of function call and it will be handled by `setf`, each process is defined by macro.
+;; For reduce cost of function call and it will be handled by `setf`,
+;; each process is defined by macro.
 (defmacro cost-of (i j)
   "Return cost between ith-node and jth-node."
   `(aref *G* ,i ,j))
@@ -109,7 +110,8 @@
   `(setf (ant-position ,ant) ,pos
          (ant-route ,ant) ,route))
 
-(defmethod ant-go-node ((ant ant) &optional (unvisited-node (remove (ant-position ant) (iota *n*))))
+(defmethod ant-go-node ((ant ant) &optional
+                                    (unvisited-node (remove (ant-position ant) (iota *n*))))
   "Recursive function. Depends on *init-pos*"
   (if (> (length unvisited-node) 0)
       (let* ((sum-of-all-th (calc-sum-of-all-th (ant-position ant) unvisited-node))
