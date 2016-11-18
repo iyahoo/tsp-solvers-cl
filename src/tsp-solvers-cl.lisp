@@ -120,6 +120,21 @@
         (ant-go-node ant (remove chosen-node unvisited-node)))
       (update-ant ant *init-pos* (cons *init-pos* (ant-route ant)))))
 
+(defun %length-of-route (route count-of-route &optional (ith-of-route 0) (acc 0))
+  "Inner function for recursion of `length-of-route`."
+  (assert (listp route))
+  (if (>= ith-of-route (1- count-of-route))
+      acc
+      (let ((cost (cost-of (nth route ith-of-route) (nth route (1+ ith-of-route)))))
+        (%length-of-route route count-of-route (1+ ith-of-route) (+ acc cost)))))
+
+(defmethod length-of-route ((ant ant))
+  "Recursive function. Depends on *G*."
+  (let* ((route (ant-route ant))
+         (count-of-route (length route)))
+    (%length-of-route route count-of-route)))
+
+;; pheromone functions
 (defun pheromone-evaporation ()
   "Update tau-matrix (evaporation by rho)"
   (let ((indexes (iota *n*)))
@@ -131,10 +146,13 @@
   (declare (ignorable ants))
   (pheromone-evaporation))
 
+;; Main
 (defun ACO ()
   (setf *my-random-state* (read-random-state))
   (initialization)
   (format t "Initial tau matrix:~%~a~%" *tau-matrix*)
   (let ((ants (make-ants 0)))
     (map ^(ant-go-node %1) ants)
-    (update-pheromon-matrix ants)))
+    (update-pheromon-matrix ants)
+    (let ((costs (map ^(length-of-route %1) ants)))
+      costs)))
