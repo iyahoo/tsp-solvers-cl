@@ -20,10 +20,12 @@
   :class :cl21-system
   :depends-on (:cl21
                :optima
-               :lla)
+               :cl-annot)
   :components ((:module "src"
                 :components
-                ((:file "tsp-solvers-cl"))))
+                ((:file "aco")
+                 (:file "tsp-solvers-cl"
+                  :depends-on ("aco")))))
   :description ""
   :long-description
   #.(with-open-file (stream (merge-pathnames
