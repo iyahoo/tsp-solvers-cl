@@ -1,6 +1,8 @@
 (in-package :cl21-user)
 (defpackage tsp-solvers-cl
-  (:use #:cl21))
+  (:use #:cl21)
+  (:import-from #:lla
+                #:mm))
 (in-package :tsp-solvers-cl)
 
 ;; Graph
@@ -136,11 +138,10 @@
 
 ;; pheromone functions
 (defun pheromone-evaporation ()
-  "Update tau-matrix (evaporation by rho)"
-  (let ((indexes (iota *n*)))
-    (doeach (i indexes)
-      (doeach (j indexes)
-        (setf (aref *tau-matrix* i j) (* (aref *tau-matrix* i j) *rho*))))))
+  "Depends on *rho*.
+   Update tau-matrix (evaporation by rho)."
+  (let ((rho-matrix (make-array (list *n* *n*) :initial-element *rho*)))
+    (setf *tau-matrix* (mm *tau-matrix* rho-matrix))))
 
 (defun update-pheromon-matrix (ants)
   (declare (ignorable ants))

@@ -19,7 +19,8 @@
   :defsystem-depends-on (:cl21)
   :class :cl21-system
   :depends-on (:cl21
-               :optima)
+               :optima
+               :lla)
   :components ((:module "src"
                 :components
                 ((:file "tsp-solvers-cl"))))
