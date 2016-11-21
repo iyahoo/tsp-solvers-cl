@@ -15,6 +15,7 @@
 (defparameter *tau-matrix* :unbound)
 (defvar *beta* :unbound)        ; Heuristic influence (takes value from [1,15]).
 (defvar *rho* :unbound)         ; Evaporation rate (takes value from [0,1]).
+(defparameter *rho-matrix* :unbound)
 (defvar *m* :unbound)           ; Number of ants.
 (defvar *n* 10)                 ; Numberofnodes.
 (defvar *Q* :unbound)           ; Constant (amount of pheromone that can be delivered by each ant).
@@ -45,8 +46,9 @@
   (read-file-from *random-state-path*))
 
 ;; Initialize function for parameters
-(defun initialize-tau (init-tau)
-  (setf *tau-matrix* (make-array (list *n* *n*) :initial-element init-tau)))
+(defun initialize-tau (init-tau init-rho)
+  (setf *tau-matrix* (make-array (list *n* *n*) :initial-element init-tau))
+  (setf *rho-matrix* (make-array (list *n* *n*) :initial-element init-rho)))
 
 (defun initialization
     (&key (tau 5) (beta 10) (rho 0.5) (m 10) (q 100) (init-pos 0))
@@ -57,7 +59,7 @@
         *m* m
         *q* q
         *init-pos* init-pos)
-  (initialize-tau *tau*))
+  (initialize-tau *tau* *rho*))
 
 ;; Accessor
 ;; For reduce cost of function call and it will be handled by `setf`,
@@ -138,10 +140,9 @@
 
 ;; pheromone functions
 (defun pheromone-evaporation ()
-  "Depends on *rho*.
+  "Depends on *rho-matrix*.
    Update tau-matrix (evaporation by rho)."
-  (let ((rho-matrix (make-array (list *n* *n*) :initial-element *rho*)))
-    (setf *tau-matrix* (mm *tau-matrix* rho-matrix))))
+  (setf *tau-matrix* (mm *tau-matrix* *rho-matrix*)))
 
 (defun update-pheromon-matrix (ants)
   (declare (ignorable ants))
