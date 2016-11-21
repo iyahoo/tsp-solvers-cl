@@ -92,13 +92,17 @@
    Otherwise, this function will be recursion with rest unvisited nodes."
   (assert (> rest-probability 0))
   (assert (not (null unvisited-node)))
-  (let ((candidate-node (first unvisited-node))
-        (rand-val (random rest-probability *my-random-state*)))
-    (if (< (- rand-val
-              (probability-of-be-chosen (ant-position ant) candidate-node sum-of-all-th))
-           0)
-        candidate-node
-        (choose-node ant (rest unvisited-node) sum-of-all-th (- rest-probability rand-val)))))
+  (if (= (length unvisited-node) 1)
+      (first unvisited-node)
+      (let* ((candidate-node (first unvisited-node))
+             (rand-val (random rest-probability *my-random-state*))
+             (chosen-probability (probability-of-be-chosen (ant-position ant)
+                                                           candidate-node
+                                                           sum-of-all-th)))
+        (if (> (- chosen-probability rand-val) 0)
+            candidate-node
+            (choose-node ant (rest unvisited-node) sum-of-all-th
+                         (- rest-probability chosen-probability))))))
 
 ;; For ant functions
 (defun make-ants (initial-position)
