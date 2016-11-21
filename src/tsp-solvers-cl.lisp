@@ -15,7 +15,6 @@
 (defparameter *tau-matrix* :unbound)
 (defvar *beta* :unbound)        ; Heuristic influence (takes value from [1,15]).
 (defvar *rho* :unbound)         ; Evaporation rate (takes value from [0,1]).
-(defparameter *rho-matrix* :unbound)
 (defvar *m* :unbound)           ; Number of ants.
 (defvar *n* 10)                 ; Numberofnodes.
 (defvar *Q* :unbound)           ; Constant (amount of pheromone that can be delivered by each ant).
@@ -46,9 +45,8 @@
   (read-file-from *random-state-path*))
 
 ;; Initialize function for parameters
-(defun initialize-tau (init-tau init-rho)
-  (setf *tau-matrix* (make-array (list *n* *n*) :initial-element init-tau))
-  (setf *rho-matrix* (make-array (list *n* *n*) :initial-element init-rho)))
+(defun initialize-tau (init-tau)
+  (setf *tau-matrix* (make-array (list *n* *n*) :initial-element init-tau)))
 
 (defun initialization
     (&key (tau 5) (beta 10) (rho 0.5) (m 10) (q 100) (init-pos 0))
@@ -57,9 +55,9 @@
         *beta* beta
         *rho* rho
         *m* m
-        *q* q
+        *q* (float q)
         *init-pos* init-pos)
-  (initialize-tau *tau* *rho*))
+  (initialize-tau *tau*))
 
 ;; Accessor
 ;; For reduce cost of function call and it will be handled by `setf`,
@@ -108,7 +106,7 @@
    Make *m* ants with initial-position."
   (loop :repeat *m*
         :collect (make-instance 'ant
-                   :position initial-position :route (list initial-position))))
+                                :position initial-position :route (list initial-position))))
 
 (defmacro update-ant (ant pos route)
   `(setf (ant-position ,ant) ,pos
@@ -124,37 +122,56 @@
         (ant-go-node ant (remove chosen-node unvisited-node)))
       (update-ant ant *init-pos* (cons *init-pos* (ant-route ant)))))
 
-(defun %length-of-route (route count-of-route &optional (ith-of-route 0) (acc 0))
-  "Inner function for recursion of `length-of-route`."
+(defun %length-of-route (route &optional (acc 0))
+  "Recursive function.
+   Inner function for recursion of `length-of-route`."
   (assert (listp route))
-  (if (>= ith-of-route (1- count-of-route))
-      acc
-      (let ((cost (cost-of (nth route ith-of-route) (nth route (1+ ith-of-route)))))
-        (%length-of-route route count-of-route (1+ ith-of-route) (+ acc cost)))))
+  (let ((start-node (first route))
+        (next-node (second route)))
+    (if (and start-node next-node)
+        (let ((cost (cost-of start-node next-node)))
+          (%length-of-route (rest route) (+ acc cost)))
+        acc)))
 
 (defmethod length-of-route ((ant ant))
-  "Recursive function. Depends on *G*."
-  (let* ((route (ant-route ant))
-         (count-of-route (length route)))
-    (%length-of-route route count-of-route)))
+  (let ((route (ant-route ant)))
+    (%length-of-route route)))
+
+(defun %put-pheromone (route route-length)
+  "Recursive function."
+  (let ((start-node (first route))
+        (next-node (second route)))
+    (when (and start-node next-node)
+      (let ((new-pheromone (+ (pheromone-of start-node next-node) (/ *Q* route-length))))
+        (setf (pheromone-of start-node next-node) new-pheromone)
+        (%put-pheromone (rest route) route-length)))))
+
+(defmethod put-pheromone ((ant ant))
+  (let ((route (ant-route ant))
+        (route-length (length-of-route ant)))
+    (%put-pheromone route route-length)))
 
 ;; pheromone functions
 (defun pheromone-evaporation ()
-  "Depends on *rho-matrix*.
-   Update tau-matrix (evaporation by rho)."
-  (setf *tau-matrix* (mm *tau-matrix* *rho-matrix*)))
+  "Update tau-matrix (evaporation by rho)"
+  (let ((indexes (iota *n*)))
+    (doeach (i indexes)
+      (doeach (j indexes)
+        (setf (aref *tau-matrix* i j) (* (aref *tau-matrix* i j) *rho*))))))
+
+(defun pheromone-reinforcement (ants)
+  (map ^(put-pheromone %1) ants))
 
 (defun update-pheromon-matrix (ants)
-  (declare (ignorable ants))
-  (pheromone-evaporation))
+  (pheromone-evaporation)
+  (pheromone-reinforcement ants))
 
 ;; Main
 (defun ACO ()
   (setf *my-random-state* (read-random-state))
   (initialization)
   (format t "Initial tau matrix:~%~a~%" *tau-matrix*)
-  (let ((ants (make-ants 0)))
-    (map ^(ant-go-node %1) ants)
-    (update-pheromon-matrix ants)
-    (let ((costs (map ^(length-of-route %1) ants)))
-      costs)))
+  (dotimes (_ 1000 (list *tau-matrix*))
+    (let ((ants (make-ants 0)))
+      (map ^(ant-go-node %1) ants)
+      (update-pheromon-matrix ants))))
