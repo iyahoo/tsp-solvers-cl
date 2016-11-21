@@ -179,7 +179,7 @@
   (initialization :tau tau :beta beta :rho rho :m m :q q :init-pos init-pos)
   (let ((final-ants))
     (dotimes (_ last-generation (list *tau-matrix* final-ants))
-      (let ((ants (make-ants 0)))
+      (let ((ants (make-ants *init-pos*)))
         (map ^(ant-go-node %1) ants)
         (update-pheromon-matrix ants)
         (setf final-ants ants)))))
