@@ -74,7 +74,7 @@
 (defun tau-and-heuristic (i j)
   "Depends on Grapd *G*, *alpha*, *beta*, *tau-matrix*."
   (* (expt (pheromone-of i j) *alpha*)
-     (expt (cost-of i j) *beta*)))
+     (expt (/ 1.0 (cost-of i j)) *beta*)))
 
 (defun calc-sum-of-all-th (i unvisited-node)
   "Sum of all tau multiply heuristic on unvisited node"
