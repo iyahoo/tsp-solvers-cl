@@ -13,12 +13,9 @@
 (defparameter *tau-matrix* :unbound)
 (defvar *beta* :unbound)        ; Heuristic influence (takes value from [1,15]).
 (defvar *rho* :unbound)         ; Evaporation rate (takes value from [0,1]).
-@export
 (defvar *m* :unbound)           ; Number of ants.
-@export
 (defvar *n* 10)                 ; Numberofnodes.
 (defvar *Q* :unbound)           ; Constant (amount of pheromone that can be delivered by each ant).
-@export
 (defvar *init-pos* :unbound)    ; Initial position of node of ants.
 
 ;; Define class
