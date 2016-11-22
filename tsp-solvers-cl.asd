@@ -23,9 +23,11 @@
                :cl-annot)
   :components ((:module "src"
                 :components
-                ((:file "aco")
+                ((:file "util")
+                 (:file "aco")
+                 (:file "ga")
                  (:file "tsp-solvers-cl"
-                  :depends-on ("aco")))))
+                  :depends-on ("aco" "ga")))))
   :description ""
   :long-description
   #.(with-open-file (stream (merge-pathnames

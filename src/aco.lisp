@@ -1,14 +1,11 @@
 (in-package :cl21-user)
 (defpackage aco
   (:use #:cl21
-        #:cl-annot))
+        #:cl-annot
+        #:util))
 (in-package :aco)
 
 (cl-annot:enable-annot-syntax)
-
-;; Graph
-(defvar *graph-path* (merge-pathnames #P"data/graph"))
-(defvar *G*)
 
 ;; Parameter
 (defvar *alpha* 1)              ; Pheromone influence (is fixed to 1).
@@ -16,14 +13,13 @@
 (defparameter *tau-matrix* :unbound)
 (defvar *beta* :unbound)        ; Heuristic influence (takes value from [1,15]).
 (defvar *rho* :unbound)         ; Evaporation rate (takes value from [0,1]).
+@export
 (defvar *m* :unbound)           ; Number of ants.
-(defvar *n* :unbound)           ; Numberofnodes.
+@export
+(defvar *n* 10)                 ; Numberofnodes.
 (defvar *Q* :unbound)           ; Constant (amount of pheromone that can be delivered by each ant).
+@export
 (defvar *init-pos* :unbound)    ; Initial position of node of ants.
-
-;; Random state
-(defvar *random-state-path* (merge-pathnames #P"data/random-state"))
-(defvar *my-random-state*)
 
 ;; Define class
 (defclass ant ()
@@ -33,17 +29,6 @@
 (defmethod print-object ((obj ant) stream)
   (print-unreadable-object (obj stream :type t)
     (format stream "position: ~a route: ~a" (ant-position obj) (ant-route obj))))
-
-;; Read from files functions
-(defun read-file-from (path)
-  (with-open-file (in path :direction :input)
-    (read in)))
-
-(defun read-graph-data ()
-  (read-file-from *graph-path*))
-
-(defun read-random-state ()
-  (read-file-from *random-state-path*))
 
 ;; Initialize function for parameters
 (defun initialize-tau (init-tau)
@@ -63,10 +48,6 @@
 ;; Accessor
 ;; For reduce cost of function call and it will be handled by `setf`,
 ;; each process is defined by macro.
-(defmacro cost-of (i j)
-  "Return cost between ith-node and jth-node."
-  `(aref *G* ,i ,j))
-
 (defmacro pheromone-of (i j)
   "Return cost between ith-node and jth-node."
   `(aref *tau-matrix* ,i ,j))
