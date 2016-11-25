@@ -152,13 +152,20 @@
 
 ;; Main
 @export
-(defun ACO (tau beta rho m q init-pos last-generation)
+(defun ACO (tau beta rho m q init-pos last-generation &optional (file-out-p nil) (file-name ""))
   "Returen final *tau-matrix* and ants"
   (setf *my-random-state* (read-random-state))
   (initialization :tau tau :beta beta :rho rho :m m :q q :init-pos init-pos)
   (let ((final-ants))
-    (dotimes (_ last-generation (list *tau-matrix* final-ants))
-      (let ((ants (make-ants *init-pos*)))
-        (map ^(ant-go-node %1) ants)
-        (update-pheromon-matrix ants)
-        (setf final-ants ants)))))
+    (with-open-file (output (merge-pathnames (append "results/" file-name))
+                            :direction :output :if-does-not-exist :create :if-exists :supersede)
+      (dotimes (g last-generation (list *tau-matrix* final-ants))
+        (let ((ants (make-ants *init-pos*)))
+          (map ^(ant-go-node %1) ants)
+          (update-pheromon-matrix ants)
+          (when file-out-p
+            (map (lambda (ant)
+                   (format output "~{~a~^,~}~%" (ant-route ant)))
+                 ants))
+          (when (= (1+ g) last-generation)
+            (setf final-ants ants)))))))
