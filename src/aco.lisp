@@ -89,7 +89,7 @@
    Make *m* ants with initial-position."
   (loop :repeat *m*
         :collect (make-instance 'ant
-                                :position initial-position :route (list initial-position))))
+                                :position initial-position :route '())))
 
 (defmacro update-ant (ant pos route)
   `(setf (ant-position ,ant) ,pos
@@ -103,7 +103,7 @@
              (chosen-node (choose-node ant unvisited-node sum-of-all-th)))
         (update-ant ant chosen-node (cons chosen-node (ant-route ant)))
         (ant-go-node ant (remove chosen-node unvisited-node)))
-      (update-ant ant *init-pos* (cons *init-pos* (ant-route ant)))))
+      (update-ant ant *init-pos* (cons *init-pos* (reverse (ant-route ant))))))
 
 (defun %length-of-route (route &optional (acc 0))
   "Recursive function.
@@ -117,8 +117,9 @@
         acc)))
 
 (defmethod length-of-route ((ant ant))
-  (let ((route (ant-route ant)))
-    (%length-of-route route)))
+  (let* ((route (ant-route ant))
+         (first-node (first route)))
+    (%length-of-route (append route (list first-node)))))
 
 (defun %put-pheromone (route route-length)
   "Recursive function."
