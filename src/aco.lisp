@@ -153,7 +153,7 @@
 ;; Main
 @export
 (defun ACO (tau beta rho m q init-pos last-generation &optional (file-out-p nil) (file-name ""))
-  "Returen final *tau-matrix* and ants"
+  "Return final *tau-matrix* and ants"
   (setf *my-random-state* (read-random-state))
   (initialization :tau tau :beta beta :rho rho :m m :q q :init-pos init-pos)
   (let ((final-ants))
