@@ -59,12 +59,37 @@ def generate(vertex_num, ant_num, csv_path, graph_path, out_dir):
 
 
 def main():
-    vertex_num = 10
-    ant_num = 10
-    csv_path = 'data/5_10_05_10_100_0_100.csv'
+    import argparse
+    import os
+    import sys
+
+    p = argparse.ArgumentParser(
+        description='This script is for visualization of TSP solver')
+    p.add_argument('-v', '--vertex_num', type=int,
+                   help='The numeber of vertex of graph', default=10)
+    p.add_argument('-a', '--ant_num', type=int,
+                   help='The numeber of ant', default=10)
+    p.add_argument('-g', '--graph', type=str,
+                   help='The path to graph csv file', required=True)
+    p.add_argument('-if', '--input_file', type=str,
+                   help='The path to input csv file', required=True)
+    p.add_argument('-of', '--output_file_dir', type=str,
+                   help='The path to output_dir', required=True)
+
+    option_args, other_args = p.parse_known_args()
+    vertex_num = option_args.vertex_num
+    ant_num = option_args.ant_num
+    csv_path = option_args.input_file
+    graph_path = option_args.graph
+    out_dir = option_args.output_file_dir
+
+    #csv_path = 'data/5_10_05_10_100_0_100.csv'
     #csv_path = 'data/5_10_095_10_10_0_100.csv'
-    graph_path = 'data/graph.csv'
-    out_dir = 'graph_01'
+    #graph_path = 'data/graph.csv'
+    #out_dir = 'graphs/aco_02'
+
+    if not os.path.isdir(out_dir):
+        os.makedirs(out_dir)
 
     generate(vertex_num, ant_num, csv_path, graph_path, out_dir)
 
