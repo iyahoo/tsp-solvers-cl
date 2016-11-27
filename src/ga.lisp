@@ -130,10 +130,7 @@
           (map ^(cross-over %1 agents %2) agents (iota *m*))
           (map #'mutation agents)
           (map #'evaluate agents)
-          (format t "evaluate:~%agents:~%~a~%length(agents):~a~%" agents (length agents))
           (setf agents (sort-agents-by-fitness agents))
-          (format t "sort:~%agents:~%~a~%length(tagents):~a~%" agents (length agents))
-          ;; (format t "~a" (sort agents #'<= :key #'agent-fitness))
           (when file-out-p
             (map (lambda (agent)
                    (format output "~{~a~^,~}~%" (ordered->normal (agent-route agent))))
