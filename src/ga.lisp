@@ -136,4 +136,17 @@
                    (format output "~{~a~^,~}~%" (ordered->normal (agent-route agent))))
                  agents))
           (when (= (1+ g) last-generation)
+            (map (lambda (agent)
+                   (setf (agent-route agent) (ordered->normal (agent-route agent))))
+                 agents)
             (setf final-agents agents)))))))
+
+
+
+
+
+
+
+
+
+
