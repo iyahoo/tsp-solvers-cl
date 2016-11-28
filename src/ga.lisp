@@ -89,10 +89,11 @@
 
 (defun cross-over (agent agents idx)
   (when (>= idx *truncation-point*)
-    (let* ((parent (nth agents (- idx *truncation-point*)))
-           (child-gene (get-child-heritage agent))
-           (parent-gene (get-parent-heritage parent)))
-      (setf (agent-route agent) (append child-gene parent-gene)))))
+    (let* ((parent1 (nth agents (- idx *truncation-point*)))
+           (parent2 (nth agents (- idx (1- *truncation-point*))))
+           (parent1-gene (get-child-heritage parent1))
+           (parent2-gene (get-parent-heritage parent2)))
+      (setf (agent-route agent) (append parent1-gene parent2-gene)))))
 
 (defun random-exchange (lst)
   "This function do not allow duplicate of list elements."
