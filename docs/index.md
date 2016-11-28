@@ -46,10 +46,29 @@
 
 
 
-## Experiment 2
-- ACO 
+## Experiment 3 (ACO)
+- tau: 5
+- alpha: 1
+- beta: 10
+- rho: 0.5
+- Q: 100
 
 
 
-## Gif
-![](../tsp_visualizer/graphs/aco_01/aco_01.gif)
+## 
+<img src="graphs/aco_01/aco_01.gif" width="900" height="650" border="" align="center" hspace="10" vspace="10">
+
+
+
+
+## Experiment 4 (ACO)
+- tau: 5
+- alpha: 1
+- beta: 10
+- rho: 0.95
+- Q: 10
+
+
+
+## 
+<img src="graphs/aco_02/aco_02.gif" width="900" height="650" border="" align="center" hspace="10" vspace="10">
