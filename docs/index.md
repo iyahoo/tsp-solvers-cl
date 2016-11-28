@@ -19,6 +19,7 @@
 
 ## Implementation
 - Common Lisp (SBCL)
+- **Impremented by us !!!!!!!!**
 
 
 
@@ -250,9 +251,10 @@ Selected points are randomly
 
 
 ## Discussion & Conclusion
-- GA could not obtain correct shortest path.
-  - In this experiment I use half of number of agents as a truncation point.
-  - This number was small, so it was difficult that agent which have good fitness survive.
+- <strike>GA could not obtain correct shortest path.</strike>
+- After modification cross over program, GA could obtain shortest path with 1000 generation
 - Improtant difference between GA and ACO,
-  - GA can not converge because GA have cross-over and mutation process. While ACO can converge when parameters are suitable.
+  - <strike>GA can not converge because GA have cross-over and mutation process.</strike> 
+  - <strike>While ACO can converge when parameters are suitable.</strike>
+  - GA and AC can converge.
 - In GA, for deciding next survived generation, we have to `sort` agents. Therefore compared with ACO, GA spend many memory space.
