@@ -26,7 +26,7 @@
 
 ## Parameters of GA
 - Cross over point: 7 or 8
-- truncate point: 5  
+- truncate point: 5 (= Number of agents / 2)  
   Five agents that have good fitness survive when go next generation.
 - mutation rate: 10% or 15%
     - Selected points are randomly
@@ -43,7 +43,7 @@
 
 
 ## Experiment 1
-
+- 
 
 
 ## Experiment 3 (ACO)
