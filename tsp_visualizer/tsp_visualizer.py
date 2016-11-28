@@ -36,26 +36,28 @@ def generate_graph_fig(vertex_num, out_file, ant_paths, graph, generation):
                        label=str(graph[i][j]), color="blue", penwidth="0.2")
             else:
                 g.edge(str(i), str(j),
-                       label=str(graph[i][j]),  penwidth=str(count * 0.5))
+                       label=str(graph[i][j]),  penwidth=str(count))
 
-    g.body.append('label="Generation: %02d"' % generation)
+    g.body.append('label="Generation: %03d"' % generation)
     g.body.append('fontsize=20')
     g.render(out_file, cleanup=True)
 
 
-def generate(vertex_num, ant_num, csv_path, graph_path, out_dir):
+def generate(vertex_num, ant_num, csv_path, graph_path, out_dir, grange):
 
     ant_path_list = read_csv(csv_path)
     graph = read_csv(graph_path)
 
     generation = len(ant_path_list) // ant_num
+    grange = int(grange)
 
     for i in range(generation):
-        generate_graph_fig(vertex_num,
-                           out_dir + '/%02d' % i,
-                           ant_path_list[i * 10: (i + 1) * 10],
-                           graph,
-                           i)
+        if i % grange == 0:
+            generate_graph_fig(vertex_num,
+                               out_dir + '/%03d' % i,
+                               ant_path_list[i * 10: (i + 1) * 10],
+                               graph,
+                               i)
 
 
 def main():
@@ -75,6 +77,8 @@ def main():
                    help='The path to input csv file', required=True)
     p.add_argument('-of', '--output_file_dir', type=str,
                    help='The path to output_dir', required=True)
+    p.add_argument('-range', '--generation_range', type=str,
+                   help='The path to range', required=True)
 
     option_args, other_args = p.parse_known_args()
     vertex_num = option_args.vertex_num
@@ -82,16 +86,17 @@ def main():
     csv_path = option_args.input_file
     graph_path = option_args.graph
     out_dir = option_args.output_file_dir
+    grange = option_args.generation_range
 
-    #csv_path = 'data/5_10_05_10_100_0_100.csv'
-    #csv_path = 'data/5_10_095_10_10_0_100.csv'
-    #graph_path = 'data/graph.csv'
-    #out_dir = 'graphs/aco_02'
+    # csv_path = 'data/5_10_05_10_100_0_100.csv'
+    # csv_path = 'data/5_10_095_10_10_0_100.csv'
+    # graph_path = 'data/graph.csv'
+    # out_dir = 'graphs/aco_02'
 
     if not os.path.isdir(out_dir):
         os.makedirs(out_dir)
 
-    generate(vertex_num, ant_num, csv_path, graph_path, out_dir)
+    generate(vertex_num, ant_num, csv_path, graph_path, out_dir, grange)
 
 
 if __name__ == "__main__":
