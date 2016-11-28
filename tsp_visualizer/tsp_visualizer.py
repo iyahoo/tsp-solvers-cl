@@ -38,7 +38,7 @@ def generate_graph_fig(vertex_num, out_file, ant_paths, graph, generation):
                 g.edge(str(i), str(j),
                        label=str(graph[i][j]),  penwidth=str(count))
 
-    g.body.append('label="Generation: %03d"' % generation)
+    g.body.append('label="Generation: %02d"' % generation)
     g.body.append('fontsize=20')
     g.render(out_file, cleanup=True)
 
@@ -54,7 +54,7 @@ def generate(vertex_num, ant_num, csv_path, graph_path, out_dir, grange):
     for i in range(generation):
         if i % grange == 0:
             generate_graph_fig(vertex_num,
-                               out_dir + '/%03d' % i,
+                               out_dir + '/%02d' % i,
                                ant_path_list[i * 10: (i + 1) * 10],
                                graph,
                                i)
