@@ -67,64 +67,63 @@ Selected points are randomly
 - Memory: 5,405 kbytes
 - Final generation:  
 ```txt
-#<AGENT fitness: 28 route: (8 1 3 9 2 6 0 7 5 4)>
-#<AGENT fitness: 28 route: (8 1 3 9 2 6 0 7 5 4)>
-#<AGENT fitness: 28 route: (2 1 3 9 8 6 0 7 5 4)>
-#<AGENT fitness: 28 route: (8 1 3 9 2 6 0 7 5 4)>
-#<AGENT fitness: 28 route: (8 1 3 9 2 6 0 7 5 4)>
-#<AGENT fitness: 28 route: (8 1 3 9 2 6 0 7 5 4)>
-#<AGENT fitness: 28 route: (8 1 3 9 2 6 0 7 5 4)>
-#<AGENT fitness: 28 route: (2 1 3 9 8 6 0 7 5 4)>
-#<AGENT fitness: 28 route: (8 1 3 9 2 6 0 7 5 4)>
-#<AGENT fitness: 28 route: (8 1 3 9 2 6 0 7 5 4)>
+#<AGENT fitness: 28 route: (0 7 5 4 8 1 3 9 2 6)>
+#<AGENT fitness: 28 route: (0 7 5 4 8 1 3 9 2 6)>
+#<AGENT fitness: 28 route: (0 7 5 4 2 1 3 9 8 6)>
+#<AGENT fitness: 28 route: (0 7 5 4 8 1 3 9 2 6)>
+#<AGENT fitness: 28 route: (0 7 5 4 8 1 3 9 2 6)>
+#<AGENT fitness: 28 route: (0 7 5 4 8 1 3 9 2 6)>
+#<AGENT fitness: 28 route: (0 7 5 4 8 1 3 9 2 6)>
+#<AGENT fitness: 28 route: (0 7 5 4 2 1 3 9 8 6)>
+#<AGENT fitness: 28 route: (0 7 5 4 8 1 3 9 2 6)>
+#<AGENT fitness: 28 route: (0 7 5 4 8 1 3 9 2 6)>
 ```
 
 
 
 ## 
-<img src="graphs/ga_10_7_15_100/ga_10_7_15_100.gif" width="900" height="650" border="" align="center" hspace="10" vspace="10">
+<img src="graphs/ga_10_5_15_100/ga_10_5_15_100.gif" width="900" height="650" border="" align="center" hspace="10" vspace="10">
 
 
 
 ## Experiment 2 (GA)
 - Cross over point: 8
-- mutaito rate: 10%
+- mutaito rate: 1%
 - End generation: 100
 - Change point (from experiment 1):  
-  - Cross over point: 7 -> 8
-  - mutation rate: 15% -> 10%
+  - mutation rate: 15% -> 1%
 
 
 
 ## Results 2
-- Obtained shortest path: (0 4 5 7 8 1 3 9 2 6)
-- Route length: 32
-- Time: 0.011 seconds
-- Memory: 5,273 kbytes
+- Obtained shortest path: (0 7 5 4 8 1 3 9 2 6)
+- Route length: 28
+- Time: 0.012 seconds
+- Memory: 5,045 kbytes
 - Final generation:  
 ```txt
-#<AGENT fitness: 40 route: (0 2 3 9 8 6 1 4 5 7)>
-#<AGENT fitness: 43 route: (0 2 4 3 7 5 6 8 1 9)>
-#<AGENT fitness: 43 route: (0 4 5 7 2 8 1 9 3 6)>
-#<AGENT fitness: 44 route: (0 9 5 7 1 6 2 8 3 4)>
-#<AGENT fitness: 44 route: (0 9 7 8 2 5 4 3 1 6)>
-#<AGENT fitness: 48 route: (0 6 2 7 1 3 5 9 8 4)>
-#<AGENT fitness: 49 route: (0 8 1 4 6 3 5 2 9 7)>
-#<AGENT fitness: 51 route: (0 9 5 8 7 3 4 6 2 1)>
-#<AGENT fitness: 55 route: (0 6 2 9 7 4 1 3 5 8)>
-#<AGENT fitness: 57 route: (0 2 3 6 1 9 7 8 4 5)>
+#<AGENT fitness: 28 route: (0 7 5 4 8 1 3 9 2 6)>
+#<AGENT fitness: 28 route: (0 7 5 4 8 1 3 9 2 6)>
+#<AGENT fitness: 28 route: (0 7 5 4 8 1 3 9 2 6)>
+#<AGENT fitness: 28 route: (0 7 5 4 8 1 3 9 2 6)>
+#<AGENT fitness: 28 route: (0 7 5 4 8 1 3 9 2 6)>
+#<AGENT fitness: 28 route: (0 7 5 4 8 1 3 9 2 6)>
+#<AGENT fitness: 28 route: (0 7 5 4 8 1 3 9 2 6)>
+#<AGENT fitness: 28 route: (0 7 5 4 8 1 3 9 2 6)>
+#<AGENT fitness: 28 route: (0 7 5 4 8 1 3 9 2 6)>
+#<AGENT fitness: 28 route: (0 7 5 4 8 1 3 9 2 6)>
 ```
 
 
 
 ## 
-<img src="graphs/ga_10_8_10_100/ga_10_8_10_100.gif" width="900" height="650" border="" align="center" hspace="10" vspace="10">
+<img src="graphs/ga_10_5_1_100/ga_10_5_1_100.gif" width="900" height="650" border="" align="center" hspace="10" vspace="10">
 
 
 
 ## Experiment 3 (GA)
-- Cross over point: 8
-- mutaito rate: 10%
+- Cross over point: 5
+- mutaito rate: 1%
 - End generation: 1000
 - Change point (from experiment 2):  
   - End generation: 100 -> 1000
@@ -132,28 +131,28 @@ Selected points are randomly
 
 
 ## Results 3
-- Obtained shortest path: (0 7 5 6 1 8 2 4 3 9)
-- Route length: 27
-- Time: seconds: 0.128 seconds
-- Memory: 52,246 kbytes
+- Obtained shortest path: (0 3 8 1 6 9 2 4 5 7)
+- Route length: 22
+- Time: seconds: 0.150 seconds
+- Memory: 49,605 kbytes
 - Final generation:  
 ```txt
-#<AGENT fitness: 35 route: (0 5 9 6 1 8 3 4 2 7)>
-#<AGENT fitness: 37 route: (0 5 6 9 3 1 7 8 2 4)>
-#<AGENT fitness: 40 route: (0 5 8 3 1 4 2 9 6 7)>
-#<AGENT fitness: 40 route: (0 7 4 8 9 3 6 5 2 1)>
-#<AGENT fitness: 47 route: (0 1 3 2 4 5 6 8 9 7)>
-#<AGENT fitness: 47 route: (0 2 8 4 5 3 9 6 7 1)>
-#<AGENT fitness: 48 route: (0 2 4 5 3 9 7 6 8 1)>
-#<AGENT fitness: 55 route: (0 2 8 5 9 7 3 4 6 1)>
-#<AGENT fitness: 63 route: (0 8 3 5 2 6 7 1 9 4)>
-#<AGENT fitness: 65 route: (0 4 2 3 6 1 7 9 5 8)>
+#<AGENT fitness: 22 route: (0 3 8 1 6 9 2 4 5 7)>
+#<AGENT fitness: 27 route: (0 7 5 6 8 1 3 9 2 4)>
+#<AGENT fitness: 27 route: (0 7 5 6 8 1 3 9 2 4)>
+#<AGENT fitness: 27 route: (0 7 5 6 8 1 3 9 2 4)>
+#<AGENT fitness: 27 route: (0 7 5 6 8 1 3 9 2 4)>
+#<AGENT fitness: 27 route: (0 7 5 6 8 1 3 9 2 4)>
+#<AGENT fitness: 27 route: (0 7 5 6 8 1 3 9 2 4)>
+#<AGENT fitness: 27 route: (0 7 5 6 8 1 3 9 2 4)>
+#<AGENT fitness: 27 route: (0 7 5 6 8 1 3 9 2 4)>
+#<AGENT fitness: 41 route: (0 7 4 5 8 1 6 9 2 3)>
 ```
 
 
 
 ## 
-<img src="graphs/ga_10_8_10_1000/ga_10_8_10_1000.gif" width="900" height="650" border="" align="center" hspace="10" vspace="10">
+<img src="graphs/ga_10_5_1_1000/ga_10_5_1_1000.gif" width="900" height="650" border="" align="center" hspace="10" vspace="10">
 
 
 
