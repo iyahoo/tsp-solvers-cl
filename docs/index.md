@@ -4,6 +4,12 @@
 
 
 
+## Fix point
+- I use correct cross over
+- Add results with mutation rate is 1%
+
+
+
 ## Environment
 - OS: Max OS X
 - CPU: 3.1 GHz Intel Core i7
@@ -26,8 +32,7 @@
 
 ## Parameters of GA
 - Representation of gene: (0 1 2 3 4 5 6 7 8 9) 
-- Cross over point: 7 or 8  
-  Child is given 7 (or 8) to 10 genes from a parent.
+- Cross over: 1 point cross over
 - truncate point: 5 (= Number of agents / 2)  
   Five agents that have good fitness survive when go next generation.
 - mutation rate: 10% or 15%  
@@ -50,29 +55,28 @@ Selected points are randomly
 
 
 ## Experiment 1 (GA)
-- Cross over point: 7
 - mutation rate: 15%
 - End generation: 100
 
 
 
 ## Results 1
-- Obtained shortest path: (0 4 5 7 8 1 3 9 2 6)
-- Route length: 32
-- Time: 0.013 seconds
-- Memory: 5,409 kbytes
+- Obtained shortest path: (0 6 5 7 8 1 3 9 2 4)
+- Route length: 27
+- Time: 0.020 seconds
+- Memory: 5,405 kbytes
 - Final generation:  
 ```txt
-#<AGENT fitness: 40 route: (0 7 5 6 8 3 4 9 2 1)>
-#<AGENT fitness: 40 route: (0 8 1 2 4 7 9 6 5 3)>
-#<AGENT fitness: 40 route: (0 6 1 8 3 5 7 9 4 2)>
-#<AGENT fitness: 42 route: (0 7 5 6 9 2 3 4 1 8)>
-#<AGENT fitness: 44 route: (0 3 8 9 4 5 7 2 6 1)>
-#<AGENT fitness: 47 route: (0 1 5 2 8 3 7 4 6 9)>
-#<AGENT fitness: 48 route: (0 5 1 7 9 6 4 2 8 3)>
-#<AGENT fitness: 54 route: (0 9 7 4 5 1 8 3 6 2)>
-#<AGENT fitness: 61 route: (0 2 5 4 3 8 6 7 9 1)>
-#<AGENT fitness: 64 route: (0 4 1 3 2 5 8 6 7 9)>
+#<AGENT fitness: 28 route: (8 1 3 9 2 6 0 7 5 4)>
+#<AGENT fitness: 28 route: (8 1 3 9 2 6 0 7 5 4)>
+#<AGENT fitness: 28 route: (2 1 3 9 8 6 0 7 5 4)>
+#<AGENT fitness: 28 route: (8 1 3 9 2 6 0 7 5 4)>
+#<AGENT fitness: 28 route: (8 1 3 9 2 6 0 7 5 4)>
+#<AGENT fitness: 28 route: (8 1 3 9 2 6 0 7 5 4)>
+#<AGENT fitness: 28 route: (8 1 3 9 2 6 0 7 5 4)>
+#<AGENT fitness: 28 route: (2 1 3 9 8 6 0 7 5 4)>
+#<AGENT fitness: 28 route: (8 1 3 9 2 6 0 7 5 4)>
+#<AGENT fitness: 28 route: (8 1 3 9 2 6 0 7 5 4)>
 ```
 
 
@@ -159,6 +163,7 @@ Selected points are randomly
 - beta: 10
 - rho: 0.5
 - Q: 100
+- End generation: 100
 
 
 
@@ -195,6 +200,7 @@ Selected points are randomly
 - beta: 10
 - rho: 0.95
 - Q: 10
+- End generation: 100
 
 
 
@@ -224,7 +230,18 @@ Selected points are randomly
 
 
 
-### Comparison: 
+### Comparison:
+- Iteration: 100  
+
+|         |  GA     |       ACO | 
+|--------:|--------:|----------:|
+| Result (shortest)  |     32  |   22       |
+| Time (second)   |  0.013     |   0.026      |
+| Memory (kbytes) |    5,409    |   4,849       |
+
+
+
+
 |         |  GA     |       ACO | 
 |--------:|--------:|----------:|
 | Result  |         |   o       |
