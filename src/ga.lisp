@@ -35,8 +35,8 @@
     (format stream "fitness: ~a route: ~a" (agent-fitness obj) (agent-route obj))))
 
 (defun make-agents ()
-  "Depends on *n* "
-  (loop :repeat *n*
+  "Depends on *m* "
+  (loop :repeat *m*
         :collect (make-instance 'agent :fitness 0)))
 
 ;; Route representaiton
