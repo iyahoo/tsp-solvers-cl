@@ -116,6 +116,7 @@
         *crossover-point* crossover-point
         *mutation-rate* mutation-rate))
 
+@export
 (defun GA (m crossover-point mutation-rate last-generation &optional file-out-p (file-name ""))
   (declare (ignorable last-generation))
   (setf *my-random-state* (read-random-state))
@@ -140,13 +141,3 @@
                    (setf (agent-route agent) (ordered->normal (agent-route agent))))
                  agents)
             (setf final-agents agents)))))))
-
-
-
-
-
-
-
-
-
-
