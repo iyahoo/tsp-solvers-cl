@@ -16,21 +16,22 @@
 
 
 
-## Common Parameters
+## Common Parameters (GA and ACO)
 - Number of agents(salesman or ants): 10
-- Number of node: 10
+- Number of graph node: 10
 - Distance between nodes: [1,10]
-- Number of generation: 1000
+- Number of generation: 100 or 1000
 
 
 
 ## Parameters of GA
-- Cross over point: 7 or 8
+- Representation of gene: (0 1 2 3 4 5 6 7 8 9) 
+- Cross over point: 7 or 8  
+  Child is given 7 (or 8) to 10 genes from a parent.
 - truncate point: 5 (= Number of agents / 2)  
   Five agents that have good fitness survive when go next generation.
-- mutation rate: 10% or 15%
-    - Selected points are randomly
-
+- mutation rate: 10% or 15%  
+Selected points are randomly
 
 
 ## Parameters of ACO
@@ -75,6 +76,7 @@
 ```
 
 
+
 ## 
 <img src="graphs/ga_10_7_15_100/ga_10_7_15_100.gif" width="900" height="650" border="" align="center" hspace="10" vspace="10">
 
@@ -108,6 +110,7 @@
 #<AGENT fitness: 55 route: (0 6 2 9 7 4 1 3 5 8)>
 #<AGENT fitness: 57 route: (0 2 3 6 1 9 7 8 4 5)>
 ```
+
 
 
 ## 
@@ -221,7 +224,19 @@
 
 
 
+### Comparison: 
+|         |  GA     |       ACO | 
+|--------:|--------:|----------:|
+| Result  |         |   o       |
+| Time    |  /      |    /      |
+| Memory  |    △     |    o      |
+
+
+
 ## Discussion & Conclusion
-- GA could not obtain correct shortest path. In this experiment I use half of number of agents as a truncation point. This number was too small, so it was difficult that agent which have good fitness survive.
-- GA can not converge because GA have cross-over and mutation process. While ACO can converge.
+- GA could not obtain correct shortest path.
+  - In this experiment I use half of number of agents as a truncation point.
+  - This number was small, so it was difficult that agent which have good fitness survive.
+- Improtant difference between GA and ACO,
+  - GA can not converge because GA have cross-over and mutation process. While ACO can converge when parameters are suitable.
 - In GA, for deciding next survived generation, we have to `sort` agents. Therefore compared with ACO, GA spend many memory space.
