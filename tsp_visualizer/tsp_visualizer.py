@@ -36,7 +36,7 @@ def generate_graph_fig(vertex_num, out_file, ant_paths, graph, generation):
                        label=str(graph[i][j]), color="blue", penwidth="0.2")
             else:
                 g.edge(str(i), str(j),
-                       label=str(graph[i][j]),  penwidth=str(count * 0.5))
+                       label=str(graph[i][j]),  penwidth=str(count))
 
     g.body.append('label="Generation: %03d"' % generation)
     g.body.append('fontsize=20')
@@ -88,10 +88,10 @@ def main():
     out_dir = option_args.output_file_dir
     grange = option_args.generation_range
 
-    #csv_path = 'data/5_10_05_10_100_0_100.csv'
-    #csv_path = 'data/5_10_095_10_10_0_100.csv'
-    #graph_path = 'data/graph.csv'
-    #out_dir = 'graphs/aco_02'
+    # csv_path = 'data/5_10_05_10_100_0_100.csv'
+    # csv_path = 'data/5_10_095_10_10_0_100.csv'
+    # graph_path = 'data/graph.csv'
+    # out_dir = 'graphs/aco_02'
 
     if not os.path.isdir(out_dir):
         os.makedirs(out_dir)
