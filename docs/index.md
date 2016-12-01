@@ -4,8 +4,8 @@
 
 
 
-## Fix point
-- I use correct cross over
+## Main fix point from presentation
+- I use `correct` cross over
 - Add results with mutation rate is 1%
 
 
@@ -36,7 +36,7 @@
 - Cross over: 1 point cross over
 - truncate point: 5 (= Number of agents / 2)  
   Five agents that have good fitness survive when go next generation.
-- mutation rate: 10% or 15%  
+- mutation rate: 1 or 15%  
 Selected points are randomly
 
 
@@ -231,22 +231,20 @@ Selected points are randomly
 
 
 ### Comparison:
-- Iteration: 100  
+|         |  GA     |       ACO | 
+|--------:|--------:|----------:|
+| Result (shortest)  |     22  |   22       |
+| Time (second)   |  0.150     |   0.026      |
+| Memory (kbytes) |    49,605    |   4,849       |
+
+
+
 
 |         |  GA     |       ACO | 
 |--------:|--------:|----------:|
-| Result (shortest)  |     32  |   22       |
-| Time (second)   |  0.013     |   0.026      |
-| Memory (kbytes) |    5,409    |   4,849       |
-
-
-
-
-|         |  GA     |       ACO | 
-|--------:|--------:|----------:|
-| Result  |         |   o       |
-| Time    |  /      |    /      |
-| Memory  |    △     |    o      |
+| Result  |  ○       |   o       |
+| Time    | ×       |    ○      |
+| Memory  |    ×     |    o      |
 
 
 
