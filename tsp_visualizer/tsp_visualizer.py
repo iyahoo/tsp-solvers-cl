@@ -1,5 +1,14 @@
 #!/usr/bin/env python
 
+"""
+date: 2016/12/01
+author: Masato Hashimoto (m5201129@u-aizu.ac.jp)
+brief:
+details:
+
+Copyright (C) 2016 Masato Hashimoto All Rights Reserved
+"""
+
 import csv
 from graphviz import Graph
 
