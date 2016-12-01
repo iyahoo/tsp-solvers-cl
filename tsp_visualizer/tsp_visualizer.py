@@ -19,7 +19,28 @@ def get_count_matrix(vertex_num, paths):
             count_matrix[i][j] += 1
             count_matrix[j][i] += 1
 
+        i, j = int(path[0]), int(path[-1])
+        count_matrix[j][i] += 1
+        count_matrix[i][j] += 1
+
     return count_matrix
+
+
+def get_minimum_cost(vertex_num, graph, ant_paths):
+    costs = []
+    for path in ant_paths:
+        cost = 0
+        for n in range(vertex_num - 1):
+            i, j = int(path[n]), int(path[n + 1])
+            cost += int(graph[i][j])
+
+        i, j = int(path[0]), int(path[-1])
+        cost += int(graph[i][j])
+        costs.append(cost)
+
+    costs.sort()
+
+    return costs[0]
 
 
 def generate_graph_fig(vertex_num, out_file, ant_paths, graph, generation):
@@ -27,6 +48,7 @@ def generate_graph_fig(vertex_num, out_file, ant_paths, graph, generation):
     g = Graph(format='png')
 
     count_matrix = get_count_matrix(vertex_num, ant_paths)
+    minimum_cost = get_minimum_cost(vertex_num, graph, ant_paths)
 
     for i in range(vertex_num):
         for j in range(i + 1, vertex_num):
@@ -38,7 +60,7 @@ def generate_graph_fig(vertex_num, out_file, ant_paths, graph, generation):
                 g.edge(str(i), str(j),
                        label=str(graph[i][j]),  penwidth=str(count))
 
-    g.body.append('label="Generation: %02d"' % generation)
+    g.body.append('label="Generation: %02d, Cost: %02d"' % (generation, minimum_cost))
     g.body.append('fontsize=20')
     g.render(out_file, cleanup=True)
 
@@ -75,8 +97,6 @@ def main():
                    help='The path to graph csv file', required=True)
     p.add_argument('-if', '--input_file', type=str,
                    help='The path to input csv file', required=True)
-    p.add_argument('-of', '--output_file_dir', type=str,
-                   help='The path to output_dir', required=True)
     p.add_argument('-range', '--generation_range', type=str,
                    help='The path to range', required=True)
 
@@ -85,18 +105,25 @@ def main():
     ant_num = option_args.ant_num
     csv_path = option_args.input_file
     graph_path = option_args.graph
-    out_dir = option_args.output_file_dir
     grange = option_args.generation_range
 
-    # csv_path = 'data/5_10_05_10_100_0_100.csv'
-    # csv_path = 'data/5_10_095_10_10_0_100.csv'
-    # graph_path = 'data/graph.csv'
-    # out_dir = 'graphs/aco_02'
+    gif_name, extension = os.path.splitext(os.path.basename(csv_path))
+    out_dir = './graphs/%s' % gif_name
 
     if not os.path.isdir(out_dir):
         os.makedirs(out_dir)
 
+    print('Generating Figure')
     generate(vertex_num, ant_num, csv_path, graph_path, out_dir, grange)
+    print('Figure Generation done!')
+
+    input_png_path = 'graphs/%s/*.png' % gif_name
+    output_gif_path = '%s/%s.gif' % (out_dir, gif_name)
+    command = 'convert -delay 60 %s %s' % (input_png_path, output_gif_path)
+
+    print('Generating GIF Anime')
+    os.system(command)
+    print('Done!!')
 
 
 if __name__ == "__main__":
