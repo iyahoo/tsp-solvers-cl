@@ -3,8 +3,8 @@
 ## Usage
 
 - visualizer/tsp_visualizer  
-Generate graph figures and GIF animation using result csv file.
-See ```$ python tsp_visualizer -h``` for usage.
+Generate graph figures and GIF animation using result csv file.  
+See ```$ python tsp_visualizer.py -h``` for usage.  
 
 
 ## Require
